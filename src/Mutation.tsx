@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { commitMutation, ConnectionHandler } from "react-relay";
+import { commitMutation } from "react-relay";
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
 import {
   MutationMutation,
