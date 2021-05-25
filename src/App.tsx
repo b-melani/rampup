@@ -1,25 +1,13 @@
 import React from "react";
 import "./App.css";
-import { graphql } from "babel-plugin-relay/macro";
-import {
-  RelayEnvironmentProvider,
-  loadQuery,
-  usePreloadedQuery,
-  PreloadedQuery,
-} from "react-relay/hooks";
+import { RelayEnvironmentProvider } from "react-relay/hooks";
 import RelayEnvironment from "./RelayEnvironment";
 import InputForm from "./InputForm";
 import styled from "@emotion/styled/macro";
-import { BrowserProtocol, queryMiddleware } from "farce";
-import { createFarceRouter, createRender, makeRouteConfig, Route } from "found";
-import CategoryTable from "./CategoryTable";
-import CustomerTable from "./CustomerTable";
-import { GraphQLTaggedNode, OperationType } from "relay-runtime";
-import { CustomerTable_customer$key } from "./__generated__/CustomerTable_customer.graphql";
-import { CategoryTable_categories$key } from "./__generated__/CategoryTable_categories.graphql";
-import { AppQuery, AppQueryResponse } from "./__generated__/AppQuery.graphql";
-//import { Resolver } from "found-relay";
-const Resolver = require("found-relay");
+import { Link } from "found";
+import BrowserRouter from "./Routes";
+
+const { Suspense } = React;
 
 // const Router = createFarceRouter({
 //   historyProtocol: new BrowserProtocol(),
@@ -47,18 +35,14 @@ const Resolver = require("found-relay");
 //       `}
 //     >
 //       <Route path="customers">
-//         <Route Component={App}
-//           query=
-//           {graphql`
+//         <Route
+//           Component={CustomerTable}
+//           query={graphql`
 //           query AppQuery {
-//           allCustomers(first: 5) {
-//           nodes {
-//             firstname
-//             lastname
-//             age
-//             country
-//             email
-//           }
+//             {
+//               allCustomers(first: 5) {
+//                 ...CustomerTable_customer
+//              }
 //         }`}
 //         />
 //       </Route>
@@ -78,35 +62,35 @@ const Container = styled.div`
   font-size: 16px;
 `;
 
-const { Suspense } = React;
+// const { Suspense } = React;
 
-interface loadedQuery<T extends OperationType> {
-  query: GraphQLTaggedNode;
-  preloadedQuery: PreloadedQuery<T>;
-}
+// interface loadedQuery<T extends OperationType> {
+//   query: GraphQLTaggedNode;
+//   preloadedQuery: PreloadedQuery<T>;
+// }
 
-// Define a query
-export const myQuery = graphql`
-  query AppQuery {
-    allCustomers(first: 5) {
-      ...CustomerTable_customer
-    }
-    allCustHists(last: 10, orderBy: ORDERID_DESC) {
-      nodes {
-        orderid
-        prodId
-      }
-    }
-    allCategories(last: 10) {
-      ...CategoryTable_categories
-    }
-  }
-`;
-// Immediately load the query as our app starts. For a real app, we'd move this
-// into our routing configuration, preloading data as we transition to new routes.
-const preloadedQuery = loadQuery(RelayEnvironment, myQuery, {
-  /* query variables */
-});
+// // Define a query
+// export const myQuery = graphql`
+//   query AppQuery {
+//     allCustomers(first: 5) {
+//       ...CustomerTable_customer
+//     }
+//     allCustHists(last: 10, orderBy: ORDERID_DESC) {
+//       nodes {
+//         orderid
+//         prodId
+//       }
+//     }
+//     allCategories(last: 10) {
+//       ...CategoryTable_categories
+//     }
+//   }
+// `;
+// // Immediately load the query as our app starts. For a real app, we'd move this
+// // into our routing configuration, preloading data as we transition to new routes.
+// const preloadedQuery = loadQuery(RelayEnvironment, myQuery, {
+//   /* query variables */
+// });
 // Inner component that reads the preloaded query results via `usePreloadedQuery()`.
 // This works as follows:
 // - If the query has completed, it returns the results of the query.
@@ -115,26 +99,38 @@ const preloadedQuery = loadQuery(RelayEnvironment, myQuery, {
 //   fallback.
 // - If the query failed, it throws the failure error. For simplicity we aren't
 //   handling the failure case here.
-function App(props: any) {
-  const data: AppQueryResponse = usePreloadedQuery<AppQuery>(
-    myQuery,
-    props.preloadedQuery
-  );
+function App() {
+  // const data: AppQueryResponse = usePreloadedQuery<AppQuery>(
+  //   myQuery,
+  //   props.preloadedQuery
+  // );
 
   return (
     <div className="App">
       <header className="App-header">
+        <div>
+          <ul>
+            <li>
+              <Link to="customer" activeClassName="active">
+                CustomerTable
+              </Link>
+            </li>
+            <li>
+              <Link to="category">CategoryTable</Link>
+            </li>
+          </ul>
+        </div>
         <InputForm />
         <Container>
           <h3>Customer table</h3>
           <h3>Category table</h3>
         </Container>
-        <Container>
+        {/* <Container>
           {data?.allCustomers && <CustomerTable customer={data.allCustomers} />}
           {data?.allCategories && (
             <CategoryTable category={data.allCategories} />
           )}
-        </Container>
+        </Container> */}
       </header>
     </div>
   );
@@ -149,7 +145,26 @@ function AppRoot() {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
       <Suspense fallback={"Loading..."}>
-        <App preloadedQuery={preloadedQuery} />
+        <div>
+          {/* <header className="App-header">
+            <div>
+              <ul>
+                <li>
+                  <Link to="customer" activeClassName="active">
+                    CustomerTable
+                  </Link>
+                </li>
+                <li>
+                  <Link to="category">CategoryTable</Link>
+                </li>
+              </ul>
+            </div>
+            <InputForm />
+          </header> */}
+          <div>
+            <BrowserRouter />
+          </div>
+        </div>
       </Suspense>
     </RelayEnvironmentProvider>
   );
