@@ -1,16 +1,15 @@
 import React, { Suspense } from "react";
 import { render, act, screen } from "@testing-library/react";
-import App from "./App";
-import { Environment } from "relay-runtime";
-const { RelayEnvironmentProvider, loadQuery } = require("react-relay");
-const {
-  MockPayloadGenerator,
-  createMockEnvironment,
-  RelayMockEnvironment,
-} = require("relay-test-utils");
 import { myQuery } from "./App";
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator";
 import { AppQueryVariables } from "./__generated__/AppQuery.graphql";
+import App from "./App";
+const { RelayEnvironmentProvider, loadQuery } = require("react-relay");
+const {
+  createMockEnvironment,
+  MockPayloadGenerator,
+  RelayMockEnvironment,
+} = require("relay-test-utils");
 
 describe("App", () => {
   let environment: RelayMockEnvironment;
@@ -59,27 +58,3 @@ describe("App", () => {
     });
   });
 });
-
-const mockResolver = {
-  AppQuery: (): AppQueryVariables => {
-    return {
-      allCustomers: {
-        nodes: [
-          {
-            firstname: "Ed",
-            lastname: "Smith",
-            age: "22",
-            email: "null",
-            county: "HU",
-          },
-        ],
-      },
-    };
-  },
-};
-
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
