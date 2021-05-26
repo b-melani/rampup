@@ -12,7 +12,6 @@ describe("InputForm", () => {
   let TestRenderer: React.FC;
 
   beforeEach(() => {
-    //environment beállítása
     environment = createMockEnvironment();
     TestRenderer = () => {
       return <InputForm />;

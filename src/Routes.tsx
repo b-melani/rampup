@@ -19,12 +19,6 @@ const Li = styled.li`
   a:visited {
     color: white;
   }
-  a:hover {
-    color: white;
-  }
-  a:active {
-    color: white;
-  }
 `;
 
 const UnorderedList = styled.ul`
