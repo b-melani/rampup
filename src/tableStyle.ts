@@ -28,9 +28,10 @@ export const Title = styled.h3`
 
 export const Container = styled.div`
   display: flex;
-  max-width: 80%;
+  max-width: 50%;
   flex-direction: column;
   align-items: center;
+  margin: 3%;
 `;
 
 export const ErrorFieldVisible = styled.span`
