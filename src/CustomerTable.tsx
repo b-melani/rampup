@@ -1,33 +1,17 @@
-import styled from "@emotion/styled/macro";
-import React from "react";
 import { useFragment } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import {
   CustomerTable_customer$data,
   CustomerTable_customer$key,
 } from "./__generated__/CustomerTable_customer.graphql";
-
-const Table = styled.table`
-  border: black solid 1px;
-  color: black;
-  background-color: white;
-  border-collapse: collapse;
-`;
-
-const TableHeader = styled.th`
-  border: black solid 1px;
-  color: black;
-`;
-
-const TableRow = styled.tr`
-  border: black solid 1px;
-  color: black;
-`;
-
-const TableCell = styled.td`
-  border: black solid 1px;
-  color: black;
-`;
+import {
+  Container,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Title,
+} from "./tableStyle";
 
 type CustomerItem = {
   readonly firstname: string;
@@ -60,6 +44,7 @@ export default function CustomerTable(props: CustomerTableProps) {
         );
         return <TableRow key={index}>{cells}</TableRow>;
       }
+      return null;
     });
   }
 
@@ -79,11 +64,14 @@ export default function CustomerTable(props: CustomerTableProps) {
   );
 
   return (
-    <Table>
-      <tbody>
-        <tr>{renderTableHeader(result)}</tr>
-        {placeHolder2(result)}
-      </tbody>
-    </Table>
+    <Container>
+      <Title>Customer Table</Title>
+      <Table>
+        <tbody>
+          <tr>{renderTableHeader(result)}</tr>
+          {placeHolder2(result)}
+        </tbody>
+      </Table>
+    </Container>
   );
 }

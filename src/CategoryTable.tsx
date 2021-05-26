@@ -1,33 +1,18 @@
-import styled from "@emotion/styled/macro";
-import React from "react";
 import { useFragment } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
 import {
   CategoryTable_categories$data,
   CategoryTable_categories$key,
 } from "./__generated__/CategoryTable_categories.graphql";
-
-const Table = styled.table`
-  border: black solid 1px;
-  color: black;
-  background-color: white;
-  border-collapse: collapse;
-`;
-
-const TableHeader = styled.th`
-  border: black solid 1px;
-  color: black;
-`;
-
-const TableRow = styled.tr`
-  border: black solid 1px;
-  color: black;
-`;
-
-const TableCell = styled.td`
-  border: black solid 1px;
-  color: black;
-`;
+import {
+  Container,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Title,
+} from "./tableStyle";
+import InputForm from "./InputForm";
 
 type CategoryItem = {
   readonly categoryname: string;
@@ -49,6 +34,7 @@ export default function CategoryTable(props: CategoryTableProps) {
         );
         return <TableRow key={index}>{cells}</TableRow>;
       }
+      return null;
     });
   }
 
@@ -75,11 +61,15 @@ export default function CategoryTable(props: CategoryTableProps) {
   );
 
   return (
-    <Table>
-      <tbody>
-        <tr>{renderTableHeader(result)}</tr>
-        {placeHolder2(result)}
-      </tbody>
-    </Table>
+    <Container>
+      <InputForm />
+      <Title>Category Table</Title>
+      <Table>
+        <tbody>
+          <tr>{renderTableHeader(result)}</tr>
+          {placeHolder2(result)}
+        </tbody>
+      </Table>
+    </Container>
   );
 }

@@ -54,35 +54,7 @@ export function commitCategoryCreateMutation(
         }
 
         allCategories?.setLinkedRecords(newCategories, "nodes");
-        console.log("END UPDATER");
-
-        //   // Get connection record
-        //   const connectionRecord = ConnectionHandler.getConnection(
-        //     feedbackRecord,
-        //     'CommentsComponent_comments_connection',
-        //   );
-
-        //   // Get the payload returned from the server
-        //   const payload = store.getRootField('comment_create');
-
-        //   // Get the edge inside the payload
-        //   const serverEdge = payload.getLinkedRecord('comment_edge');
-
-        //   // Build edge for adding to the connection
-        //   const newEdge = ConnectionHandler.buildConnectionEdge(
-        //     store,
-        //     connectionRecord,
-        //     serverEdge,
-        //   );
-
-        //   // Add edge to the end of the connection
-        //   ConnectionHandler.insertEdgeAfter(
-        //     connectionRecord,
-        //     newEdge,
-        //   );
       },
     });
   });
 }
-
-//module.exports = { commit: commitCategoryCreateMutation };

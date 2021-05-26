@@ -7,42 +7,45 @@ import CustomerPage from "./CustomerPage";
 import React from "react";
 import InputForm from "./InputForm";
 
+// - <Suspense> specifies a fallback in case a child suspends.
 const { Suspense } = React;
 
 const EmptyPage = () => {
-  return <span>Coming soon..</span>;
+  return <span>Welcome!</span>;
 };
 
 const PageLayout: React.FC = ({ children }) => {
   return (
     <>
-      <div>
-        <ul>
-          <li>
-            <Link to="/" exact>
-              home
-            </Link>
-          </li>
-          <li>
-            <Link to="/customer" activeClassName="active">
-              CustomerTable
-            </Link>
-          </li>
-          <li>
-            <Link to="/category" exact>
-              CategoryTable
-            </Link>
-          </li>
-          <li>
-            <Link to="/category/create" exact>
-              Creating category
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <Suspense fallback={"Loading..."}>{children}</Suspense>
-      </div>
+      <nav>
+        <div>
+          <ul>
+            <li>
+              <Link to="/" exact>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/customer" activeClassName="active">
+                Customer table
+              </Link>
+            </li>
+            <li>
+              <Link to="/category" exact>
+                Category table
+              </Link>
+            </li>
+            <li>
+              <Link to="/category/create" exact>
+                Creating category
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <Suspense fallback={"Loading..."}>{children}</Suspense>
+        </div>
+      </nav>
     </>
   );
 };

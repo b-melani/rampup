@@ -1,6 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React from "react";
-import { loadQuery, usePreloadedQuery } from "react-relay/hooks";
+import {
+  loadQuery,
+  PreloadedQuery,
+  usePreloadedQuery,
+} from "react-relay/hooks";
 import CategoryTable from "./CategoryTable";
 import RelayEnvironment from "./RelayEnvironment";
 import {
@@ -18,7 +21,10 @@ export const categoryQuery = graphql`
 `;
 // Immediately load the query as our app starts. For a real app, we'd move this
 // into our routing configuration, preloading data as we transition to new routes.
-const preloadedQuery: any = loadQuery(RelayEnvironment, categoryQuery, {
+const preloadedQuery: PreloadedQuery<
+  CategoryPageQuery,
+  Record<string, unknown>
+> = loadQuery(RelayEnvironment, categoryQuery, {
   /* query variables */
 });
 // Inner component that reads the preloaded query results via `usePreloadedQuery()`.
@@ -30,7 +36,6 @@ const preloadedQuery: any = loadQuery(RelayEnvironment, categoryQuery, {
 // - If the query failed, it throws the failure error. For simplicity we aren't
 //   handling the failure case here.
 export default function CategoryPage() {
-  console.log("RENDER");
   const data: CategoryPageQueryResponse = usePreloadedQuery<CategoryPageQuery>(
     categoryQuery,
     preloadedQuery

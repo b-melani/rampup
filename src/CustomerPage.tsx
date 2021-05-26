@@ -1,6 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React from "react";
-import { loadQuery, usePreloadedQuery } from "react-relay/hooks";
+import {
+  loadQuery,
+  PreloadedQuery,
+  usePreloadedQuery,
+} from "react-relay/hooks";
 import CustomerTable from "./CustomerTable";
 import RelayEnvironment from "./RelayEnvironment";
 import {
@@ -18,7 +21,10 @@ export const customerQuery = graphql`
 `;
 // Immediately load the query as our app starts. For a real app, we'd move this
 // into our routing configuration, preloading data as we transition to new routes.
-const preloadedQuery: any = loadQuery(RelayEnvironment, customerQuery, {
+const preloadedQuery: PreloadedQuery<
+  CustomerPageQuery,
+  Record<string, unknown>
+> = loadQuery(RelayEnvironment, customerQuery, {
   /* query variables */
 });
 // Inner component that reads the preloaded query results via `usePreloadedQuery()`.
