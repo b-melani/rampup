@@ -34,7 +34,6 @@ export default function CustomerTable(props: CustomerTableProps) {
   }
 
   function placeHolder2(data: CustomerTable_customer$data) {
-    console.log(data);
     return data.nodes.map((item: CustomerItem | null, index: number) => {
       if (item) {
         const cells = Object.keys(item).map(

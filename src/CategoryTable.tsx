@@ -24,7 +24,6 @@ type CategoryTableProps = { category: CategoryTable_categories$key };
 
 export default function CategoryTable(props: CategoryTableProps) {
   function placeHolder2(data: CategoryTable_categories$data) {
-    console.log(data);
     return data.nodes.map((item: CategoryItem | null, index: number) => {
       if (item) {
         const cells = Object.keys(item).map(
